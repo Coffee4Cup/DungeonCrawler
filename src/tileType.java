@@ -1,0 +1,3 @@
+enum tileType {
+    floor, wall
+}
