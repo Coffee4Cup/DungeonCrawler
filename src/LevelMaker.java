@@ -1,5 +1,13 @@
-import java.io.FileNotFoundException;
+public abstract class LevelMaker {
 
-public interface LevelMaker {
-    public Level makeLevel() throws FileNotFoundException;
+    final protected Player player;
+    final protected EntityFactory entityFactory;
+
+    public LevelMaker(Player player, EntityFactory entityFactory) {
+
+        this.player = player;
+        this.entityFactory = entityFactory;
+    }
+
+    public abstract Level makeLevel();
 }

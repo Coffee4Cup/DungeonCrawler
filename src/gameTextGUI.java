@@ -2,9 +2,6 @@ import java.util.Scanner;
 
 public class gameTextGUI extends GameGUI implements textSymbol{
 
-    public gameTextGUI() {
-    }
-
     @Override
     protected void printNextRow() {
         System.out.print('\n');
@@ -13,11 +10,11 @@ public class gameTextGUI extends GameGUI implements textSymbol{
     protected void printTile(Tile tile) throws Exception {
         Entity entity;
         if(tile == null)
-            System.out.print(space);
+            System.out.print(spaceSymbol);
         else if (tile instanceof WallTile)
-            System.out.print(wall);
+            System.out.print(wallSymbol);
         else if(tile instanceof FloorTile && ((FloorTile)tile).isEmpty())
-        System.out.print(floor);
+        System.out.print(floorSymbol);
         else if(tile instanceof FloorTile && !((FloorTile)tile).isEmpty()){
             entity = (((FloorTile) tile).getEntity());
             printEntity(entity);
@@ -36,9 +33,14 @@ public class gameTextGUI extends GameGUI implements textSymbol{
         );
     }
     @Override
-    public void printStartMessage(){
-        System.out.println("PSYCH, YOU CAN ONLY CHOOSE WARRIOR. YOU ARE A WARRIOR NOW\n" +
+    public void printStartMessage(){/*@todo add...*/
+        System.out.println("YOU CAN ONLY CHOOSE WARRIOR. YOU ARE A WARRIOR NOW\n" +
                 "BEGIN!");
+    }
+
+    @Override
+    public void printInvalidActionReason(InvalidActionCode invalidReason, ActiveEntity activeEntity, ActionType actionType) {
+        System.out.printf("%s tried to %s, can't preform because %s\n", activeEntity,actionType, invalidReason);
     }
 
     @Override
@@ -50,8 +52,8 @@ public class gameTextGUI extends GameGUI implements textSymbol{
 
     private void printEntity(Entity entity) throws Exception {
         if(entity instanceof Player)
-            System.out.print(player);
+            System.out.print(playerSymbol);
         else if (entity instanceof Monster)
-            System.out.print(monster);
+            System.out.print(monsterSymbol);
     }
 }

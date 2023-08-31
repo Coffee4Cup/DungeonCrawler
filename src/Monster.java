@@ -1,22 +1,12 @@
-public class Monster extends Entity implements ActiveEntity {
+public class Monster extends ActiveEntity  {
 
     int AttackDistance = 1;
 
-    public Monster(int xCoordinate, int yCoordinate) {
-        super(xCoordinate, yCoordinate);
+    public Monster(int xCoordinate, int yCoordinate, ActionGenerator actionGenerator) {
+        super(xCoordinate, yCoordinate,actionGenerator);
     }
 
-    @Override
-    public void takeTurn(Level level) {
-        System.out.printf("the monster %s takes her turn\n", this.toString());
-    }
-    public boolean isPlayerInAttackDistance(Level level) {
-
-        Coordinates playerCoordinates = level.getPlayerPosition();
-
-        return  this.getCoordinates().distance(playerCoordinates) <= AttackDistance;
-
-
-
+    public ActionType getAction() {
+        return actionGenerator.GenerateAction();
     }
 }

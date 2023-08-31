@@ -2,21 +2,28 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
 
-        Game game;
+        Game game = new Game();
+
         FileLevelMaker levelMaker;
         GameGUI gameGUI;
-        Controller controller;
-        if (args.length > 0 && args[0].equalsIgnoreCase("-t")) {
+        ActionGenerator playerController;
+        if (args.length > 0 && args[0].equalsIgnoreCase("-d"))
+        {
 
-            levelMaker = new FileLevelMaker(args[1]);
+            Player player = game.getPlayer();
+            EntityFactory entityFactory = new EntityFactory(new MonsterAIActionGenerator());
+            playerController = new DefultPlayerController();
             gameGUI = new gameTextGUI();
-            controller = new DefultController();
-            game = new Game(levelMaker,controller, gameGUI);
+
+            levelMaker = new FileLevelMaker(args[1], player, entityFactory);
+
+            player.setActionGenerator(playerController);
+
+            game.buildGame(gameGUI,levelMaker);
+
         } else {
-            // Handle other cases if needed
             return;
         }
-        game.loadGame();
         game.startGame();
 
 

@@ -1,30 +1,22 @@
-public class Player extends Entity implements ActiveEntity{
+public class Player extends ActiveEntity {
 
-    private Controller controller;
-    public Player(Coordinates coordinates) {
-        super(coordinates);
+    public Player(Coordinates coordinates, ActionGenerator actionGenerator) {
+        super(coordinates, actionGenerator);
     }
 
-    public Player(int xCoordinate, int yCoordinate) {
-        super(xCoordinate, yCoordinate);
+    private Player(int xCoordinate, int yCoordinate, ActionGenerator actionGenerator) {
+        super(xCoordinate, yCoordinate, actionGenerator);
     }
 
-
-    @Override
-    public void takeTurn(Level level) {
-        PlayerMove playerMove = null;
-
-        boolean validMove = false;
-
-        while (!validMove)
-        {
-             playerMove = controller.getMove();/*gets the move type from the controller */
-             validMove = checkMoveValidity(playerMove, level.getMap());/*checks if the move is valid, responsible for printing the message if the move is not valid*/
-        }
-        preformMove(playerMove, level);
+    /*The player is created with null because it the game creates it and then  */
+    public Player() {
+        super(null, null);
     }
+/*@todo (1) transefer the getting of the action to the controler that is an
+    implementation of actionGenerator- done.(2) and the validity checking to a
+     special class in game to check the validity of the move
 
-    private void preformMove(PlayerMove playerMove, Level level) {
+    private void preformMove() {
         switch (playerMove){
 
             case WALK_UP ->
@@ -49,7 +41,7 @@ public class Player extends Entity implements ActiveEntity{
 
             case SPECIAL_MOVE ->
 
-                    System.out.print("This is my special! for now... WOLOLOL");
+                    System.out.print("This is my special move! for now...");
         }
     }
 
@@ -81,19 +73,11 @@ public class Player extends Entity implements ActiveEntity{
                 isValid = map.isTileEmptyFloor(querryCoordinates);
             }
             case ATTACK ->
-                isValid = true; /*no condition for now */
+                isValid = true; *//*no condition for now *//*
             case SPECIAL_MOVE ->
                 isValid = true;
         }
         return isValid;
-    }
+    }*/
 
-
-    public Controller getController() {
-        return controller;
-    }
-
-    public void setController(Controller controller) {
-        this.controller = controller;
-    }
 }

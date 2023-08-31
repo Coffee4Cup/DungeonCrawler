@@ -44,4 +44,29 @@ public class Coordinates {
     public Coordinates getToTheLeft() {
         return new Coordinates(this.xCoordinate - 1, this.yCoordinate);
     }
+
+    public Coordinates getNewCoordinates(ActionType moveAction) {
+
+        /*NOTE: assumes that the action type is a walk type Action*/
+
+        Coordinates newCoordinates;
+        if(moveAction == ActionType.WALK_UP)
+        {
+            newCoordinates = getAbove();
+        }
+        else if(moveAction == ActionType.WALK_DOWN)
+        {
+            newCoordinates = getBelow();
+        }
+        else if(moveAction == ActionType.WALK_LEFT)
+        {
+            newCoordinates = getToTheLeft();
+        }
+        else /*(moveAction == ActionType.WALK_RIGHT) */
+        {
+            newCoordinates = getToTheRight();
+        }
+
+    return newCoordinates;
+    }
 }

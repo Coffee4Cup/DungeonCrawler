@@ -2,7 +2,7 @@
  *
  * The tile can hold an entity like a person or a monster
  * it can hold a state of walkable and not walkable.
- * it also holds an enum that says what type of tile it is, wall, floor etc...
+ * it also holds an enum that says what type of tile it is, wallSymbol, floorSymbol etc...
  * */
 
 abstract public class Tile {

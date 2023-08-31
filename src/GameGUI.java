@@ -1,18 +1,13 @@
 abstract public class GameGUI {
 
     protected abstract void printNextRow();
-    Level level;
+
     public void print(Level level) throws Exception {
-    this.level = level;
-    iterateMap();
+    iterateMap(level);
 }
 
-    public void setLevel(Level level) {
-        this.level = level;
-    }
-
     protected abstract void printTile(Tile tile) throws Exception;
-    Map iterateMap() throws Exception {
+    Map iterateMap(Level level) throws Exception {
 
         Tile currentTile;
         Map map = level.getMap();
@@ -34,4 +29,6 @@ abstract public class GameGUI {
 
     public abstract PlayerClass getMenuSelection();
     public abstract void printStartMessage();
+
+    public abstract void printInvalidActionReason(InvalidActionCode invalidReason, ActiveEntity activeEntity, ActionType actionType);
 }

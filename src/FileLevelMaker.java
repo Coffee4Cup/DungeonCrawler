@@ -6,29 +6,26 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
+/*@todo add a way to pass a folder path and make it iterate over the files and try to all the level in the folder*/
+public class FileLevelMaker extends LevelMaker implements textSymbol {
 
-public class FileLevelMaker implements textSymbol, LevelMaker {
 
-   EntityFactory entityFactory;
-   String path;
+
+
+    public FileLevelMaker(String filePath, Player player, EntityFactory entityFactory) {
+        entityFactory.
+        super(player, entityFactory);
+        this.filePath = filePath;
+    }
+
+    String filePath;
    Level tempLevel;
 
-   /*@todo add a way to pass a folder path and make it iterate over the files and try to all the level in the folder*/
-    public FileLevelMaker(String path) {
-
-        this.path = path;
-        this.entityFactory = new EntityFactory();
-    }
-
-    public Level makeLevelFromFile(String path) throws FileNotFoundException {
-        this.path = path;
-        return makeLevelFromFile();
-    }
-    public Level makeLevelFromFile() throws FileNotFoundException {
+    private Level makeLevelFromFile() throws FileNotFoundException {
 
         this.tempLevel = new Level();
         Map tempMap = tempLevel.map;
-        File mapFile = new File(path);
+        File mapFile = new File(filePath);
         Scanner Reader = new Scanner(mapFile);
         String line;
 
@@ -56,19 +53,19 @@ public class FileLevelMaker implements textSymbol, LevelMaker {
         } else if (tileCharacter == '#') {
             tile = new WallTile(xCoordinate, yCoordinate);
         } else if (tileCharacter == 'x') {
-            tile = new FloorTile(xCoordinate, yCoordinate, spawnPlayer(xCoordinate, yCoordinate));
+            tile = new FloorTile(xCoordinate, yCoordinate);
+            setPlayerCoordinates(xCoordinate, yCoordinate);
         } else if (tileCharacter == 'm') {
             tile = new FloorTile(xCoordinate, yCoordinate, spawnMonster(xCoordinate, yCoordinate));
         }
         return tile;
     }
 
-    private Entity spawnPlayer(int xCoordinate, int yCoordinate) {
-        Player player = this.entityFactory.createPlayer(xCoordinate, yCoordinate);
-        tempLevel.setPlayer(player);
-        return player;
+    private void setPlayerCoordinates(int xCoordinate, int yCoordinate) {
+        tempLevel.playerSpawnPoint = new Coordinates(xCoordinate, yCoordinate);
     }
     private Entity spawnMonster(int xCoordinate, int yCoordinate) {
+
         Monster monster = this.entityFactory.createMonster(xCoordinate, yCoordinate);
         tempLevel.addActiveEntity(monster);
         return monster;
@@ -76,7 +73,11 @@ public class FileLevelMaker implements textSymbol, LevelMaker {
 
 
     @Override
-    public Level makeLevel() throws FileNotFoundException {
-        return makeLevelFromFile();
+    public Level makeLevel(){
+        try {
+            return makeLevelFromFile();
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

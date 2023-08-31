@@ -7,6 +7,10 @@ public class Entity {
         this.coordinates = coordinates;
     }
 
+    public void setCoordinates(Coordinates coordinates) {
+        this.coordinates = coordinates;
+    }
+
     public Entity(int xCoordinate, int yCoordinate) {
         this.coordinates = new Coordinates(xCoordinate, yCoordinate);
     }
@@ -19,6 +23,12 @@ public class Entity {
 
         this.coordinates = newCoordinates;
         level.updateEntityPosition(oldCoordinates, newCoordinates, this);
+    }
+    public void updatePosition(ActionType moveAction, Level level) {
+
+        Coordinates newCoordinates = this.coordinates.getNewCoordinates(moveAction);
+        level.updateEntityPosition(this.coordinates, newCoordinates, this);
+        this.setCoordinates(newCoordinates);
     }
     public void moveUp(Level level){
 
